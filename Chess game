@@ -1,7 +1,50 @@
-echo "# chess-game" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/1evi98/chess-game.git
-git push -u origin main
+
+// Import the React library and the React DOM rendering library
+import React, { useState } from 'react';
+import { render } from 'react-dom';
+
+// Import a library for implementing the chess game logic
+import Chess from 'chess.js';
+
+// Define the ChessGame component
+const ChessGame = () => {
+  // Create the chess game object and initialize the state
+  const chess = new Chess();
+  const [position, setPosition] = useState(chess.fen());
+
+  // Function for making a move on the chess board
+  const makeMove = (move) => {
+    // Make the move on the chess game object
+    chess.move(move);
+
+    // Update the position state with the new FEN string
+    setPosition(chess.fen());
+  };
+
+  // Function for making a move on the chess board as the AI opponent
+  const makeAIMove = () => {
+    // Generate a list of possible moves for the AI
+    const moves = chess.moves();
+
+    // Choose a random move from the list and make it on the chess game object
+    const move = moves[Math.floor(Math.random() * moves.length)];
+    chess.move(move);
+
+    // Update the position state with the new FEN string
+    setPosition(chess.fen());
+  };
+
+  // Return a div element with the chess board image and a text element inside
+  return (
+    <div>
+      <img src="./chess-board.png" alt="Chess board" />
+      <p>Welcome to the Chess Game!</p>
+      <p>Current position: {position}</p>
+      <button onClick={() => makeMove('e4')}>Make a move</button>
+      <button onClick={() => makeAIMove()}>AI move</button>
+    </div>
+  );
+};
+
+// Render the ChessGame component in the root element of the HTML page
+render(<Che
