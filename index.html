@@ -1,0 +1,50 @@
+<!-- Create an HTML file with the chess game code and a link to the JavaScript file -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chess Game</title>
+  </head>
+  <body>
+    <!-- Add a div element with an id of "root" to serve as the root element for the React app -->
+    <div id="root"></div>
+    <!-- Add a script tag to include the chess game code -->
+    <script src="./chess-game.js"></script>
+  </body>
+</html>
+
+// Import the React library and the React DOM rendering library
+import React, { useState } from 'react';
+import { render } from 'react-dom';
+
+// Import a library for implementing the chess game logic
+import Chess from 'chess.js';
+
+// Define the ChessGame component
+const ChessGame = () => {
+  // Create the chess game object and initialize the state
+  const chess = new Chess();
+  const [position, setPosition] = useState(chess.fen());
+
+  // Function for making a move on the chess board
+  const makeMove = (move) => {
+    // Make the move on the chess game object
+    chess.move(move);
+
+    // Update the position state with the new FEN string
+    setPosition(chess.fen());
+  };
+
+  // Function for making a move on the chess board as the AI opponent
+  const makeAIMove = () => {
+    // Generate a list of possible moves for the AI
+    const moves = chess.moves();
+
+    // Choose a random move from the list and make it on the chess game object
+    const move = moves[Math.floor(Math.random() * moves.length)];
+    chess.move(move);
+
+    // Update the position state with the new FEN string
+    setPosition(chess.fen());
+  };
+
+  // Return a div element with the chess
